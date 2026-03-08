@@ -49,14 +49,11 @@ STORYBOARD_DRAFT_FILES = {
     "numbered.txt",
     "registry.json",
     "segments.txt",
+    "segments_full.txt",
+    "details.txt",
     "details.json",
-    "draft.json",
-    "patches.txt",
-    "violations.json",
+    "progress.json",
 }
-STORYBOARD_DRAFT_CHUNK_PATTERN = re.compile(
-    r"^chunk\d+(?:\.details)?(?:\.json|\.txt)$"
-)
 
 S1_FIXED_FILES = {
     "characters.json",
@@ -156,14 +153,12 @@ def validate_s1(rest):
             if CHAPTER_NAME_PATTERN.match(chapter_dir):
                 if filename in STORYBOARD_DRAFT_FILES:
                     return True, None
-                if STORYBOARD_DRAFT_CHUNK_PATTERN.match(filename):
-                    return True, None
         return False, (
             f"s1_info/storyboard_draft/ 下路径不合法: {rest!r}\n"
             "合法示例：\n"
             "  s1_info/storyboard_draft/b1_chapter01/meta.json\n"
-            "  s1_info/storyboard_draft/b1_chapter01/chunk1.txt\n"
-            "  s1_info/storyboard_draft/b1_chapter01/chunk1.details.json"
+            "  s1_info/storyboard_draft/b1_chapter01/segments.txt\n"
+            "  s1_info/storyboard_draft/b1_chapter01/details.json"
         )
 
     return False, (
@@ -172,7 +167,7 @@ def validate_s1(rest):
         "  s1_info/characters.json\n"
         "  s1_info/location.json\n"
         "  s1_info/storyboard/b1_chapter01.json\n"
-        "  s1_info/storyboard_draft/b1_chapter01/draft.json"
+        "  s1_info/storyboard_draft/b1_chapter01/progress.json"
     )
 
 
