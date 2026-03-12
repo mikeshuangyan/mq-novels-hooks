@@ -64,6 +64,8 @@ S1_FIXED_FILES = {
 STORYBOARD_FINAL_PATTERN = re.compile(r"^storyboard/b\d+_chapter\d+\.json$")
 CHAPTER_NAME_PATTERN = re.compile(r"^b\d+_chapter\d+$")
 
+S3_PROMPT_PATTERN = re.compile(r"^prompts/b\d+_chapter\d+/prompt_\d+\.txt$")
+
 
 # ── 项目名校验（以 config.json 为锚点）───────────────────────────────────
 
@@ -138,6 +140,16 @@ def validate_s0(rest):
     )
 
 
+def validate_s3(rest):
+    if S3_PROMPT_PATTERN.match(rest):
+        return True, None
+    return False, (
+        f"s3_images/ 下路径不合法: {rest!r}\n"
+        "合法示例：\n"
+        "  s3_images/prompts/b1_chapter01/prompt_1.txt"
+    )
+
+
 def validate_s1(rest):
     if rest in S1_FIXED_FILES:
         return True, None
@@ -204,9 +216,11 @@ def validate_path(file_path):
         return validate_s0(rest)
     elif known_dir == "s1_info":
         return validate_s1(rest)
+    elif known_dir == "s3_images":
+        return validate_s3(rest)
     else:
         return False, (
-            f"未知顶层目录 {known_dir!r}，只允许 s0_chapters / s1_info / book\n"
+            f"未知顶层目录 {known_dir!r}，只允许 s0_chapters / s1_info / s3_images / book\n"
             f"路径: {file_path}"
         )
 
