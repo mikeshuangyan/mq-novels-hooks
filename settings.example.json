@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "// 说明": "路径校验 — 拦截不符合小说目录规范的 Write/Edit 操作",
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /path/to/novels/.claude/hooks/novel-path-validator.py"
+          }
+        ]
+      },
+      {
+        "// 说明": "Agent 白名单 — 只放行 agent-allowlist.json 中授权的 Agent 调用",
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /path/to/novels/.claude/hooks/agent-guard.py"
+          }
+        ]
+      },
+      {
+        "// 说明": "章节大纲提醒 — 写入 chapter-outlines/ 时注入逐章写入提醒",
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /path/to/novels/.claude/hooks/chapter-outline-reminder.py"
+          }
+        ]
+      }
+    ]
+  }
+}
