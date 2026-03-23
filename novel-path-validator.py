@@ -36,12 +36,17 @@ BOOK_PATTERNS = [
     r"^04-场景档案\.md$",
     r"^05-写作风格\.md$",
     r"^06-全局伏笔追踪\.md$",
-    r"^chapter-outlines/chapter\d+\.md$",
-    r"^chapters/chapter\d+\.md$",
+    r"^06-编辑评审\.md$",
+    r"^世界状态\.md$",
+    r"^设计备忘\.md$",
+    r"^史实参考资料\.md$",
+    r"^chapter-outlines/chapter\d{4}\.md$",
+    r"^chapters/chapter\d{4}\.md$",
+    r"^reviews/",  # 审核报告、裁决文件及临时文件
 ]
 
 S0_PATTERNS = [
-    r"^s0_original/b\d+_chapter\d+\.txt$",
+    r"^s0_original/chapter\d{4}\.txt$",
 ]
 
 STORYBOARD_DRAFT_FILES = {
@@ -58,13 +63,14 @@ STORYBOARD_DRAFT_FILES = {
 S1_FIXED_FILES = {
     "characters.json",
     "location.json",
+    "props.json",
     "genre.txt",
     "metadata.txt",
 }
-STORYBOARD_FINAL_PATTERN = re.compile(r"^storyboard/b\d+_chapter\d+\.json$")
-CHAPTER_NAME_PATTERN = re.compile(r"^b\d+_chapter\d+$")
+STORYBOARD_FINAL_PATTERN = re.compile(r"^storyboard/chapter\d{4}\.json$")
+CHAPTER_NAME_PATTERN = re.compile(r"^chapter\d{4}$")
 
-S3_PROMPT_PATTERN = re.compile(r"^prompts/b\d+_chapter\d+/prompt_\d+\.txt$")
+S3_PROMPT_PATTERN = re.compile(r"^prompts/chapter\d{4}/prompt_\d+\.txt$")
 
 
 # ── 项目名校验（以 config.json 为锚点）───────────────────────────────────
@@ -74,9 +80,7 @@ def check_project_via_config(genre, protagonist, project, known_dir, rest):
     用 book/config.json 是否存在来判断项目是否已建立。
 
     - 写 book/config.json 本身：无条件放行（建立项目的操作）
-    - 其他文件：若 config.json 存在则放行；否则在同级查找已建立的相似项目名
-      - 有相似 → 阻断并提示
-      - 无相似 → 视为新项目，放行
+    - 其他文件：若 config.json 存在则放行；否则报错并提示相似项目名
     """
     # book/config.json 无条件放行（建立项目）
     if known_dir == "book" and rest == "config.json":
@@ -124,9 +128,10 @@ def validate_book(rest):
         "合法示例：\n"
         "  book/config.json\n"
         "  book/progress.json\n"
-        "  book/00-剧情草案.md … 05-写作风格.md\n"
-        "  book/chapter-outlines/chapter01.md\n"
-        "  book/chapters/chapter01.md"
+        "  book/世界状态.md\n"
+        "  book/00-剧情草案.md … 06-编辑评审.md\n"
+        "  book/chapter-outlines/chapter0001.md\n"
+        "  book/chapters/chapter0001.md"
     )
 
 
@@ -136,7 +141,7 @@ def validate_s0(rest):
             return True, None
     return False, (
         f"s0_chapters/ 下路径不合法: {rest!r}\n"
-        "合法示例：s0_chapters/s0_original/b1_chapter01.txt"
+        "合法示例：s0_chapters/s0_original/chapter0001.txt"
     )
 
 
@@ -146,7 +151,7 @@ def validate_s3(rest):
     return False, (
         f"s3_images/ 下路径不合法: {rest!r}\n"
         "合法示例：\n"
-        "  s3_images/prompts/b1_chapter01/prompt_1.txt"
+        "  s3_images/prompts/chapter0001/prompt_1.txt"
     )
 
 
@@ -168,9 +173,9 @@ def validate_s1(rest):
         return False, (
             f"s1_info/storyboard_draft/ 下路径不合法: {rest!r}\n"
             "合法示例：\n"
-            "  s1_info/storyboard_draft/b1_chapter01/meta.json\n"
-            "  s1_info/storyboard_draft/b1_chapter01/segments.txt\n"
-            "  s1_info/storyboard_draft/b1_chapter01/details.json"
+            "  s1_info/storyboard_draft/chapter0001/meta.json\n"
+            "  s1_info/storyboard_draft/chapter0001/segments.txt\n"
+            "  s1_info/storyboard_draft/chapter0001/details.json"
         )
 
     return False, (
@@ -178,8 +183,9 @@ def validate_s1(rest):
         "合法示例：\n"
         "  s1_info/characters.json\n"
         "  s1_info/location.json\n"
-        "  s1_info/storyboard/b1_chapter01.json\n"
-        "  s1_info/storyboard_draft/b1_chapter01/progress.json"
+        "  s1_info/props.json\n"
+        "  s1_info/storyboard/chapter0001.json\n"
+        "  s1_info/storyboard_draft/chapter0001/progress.json"
     )
 
 
