@@ -29,20 +29,22 @@ NOVELS_ROOT = os.path.dirname(_claude_dir).rstrip("/")     # $NOVELS_ROOT
 BOOK_PATTERNS = [
     r"^config\.json$",
     r"^progress\.json$",
+    r"^model-state\.json$",
     r"^00-剧情草案\.md$",
     r"^01-世界观\.md$",
-    r"^02-大纲\.md$",
-    r"^03-人物档案\.md$",
-    r"^04-场景档案\.md$",
-    r"^05-写作风格\.md$",
+    r"^02-人物档案\.md$",
+    r"^03-场景档案\.md$",
+    r"^04-设计备忘\.md$",
+    r"^05-模板摘要\.md$",
+    r"^06-大纲\.md$",
     r"^06-全局伏笔追踪\.md$",
-    r"^06-编辑评审\.md$",
-    r"^世界状态\.md$",
-    r"^设计备忘\.md$",
+    r"^07-写作风格\.md$",
+    r"^08-世界状态\.md$",
     r"^史实参考资料\.md$",
     r"^chapter-outlines/chapter\d{4}\.md$",
     r"^chapters/chapter\d{4}\.md$",
-    r"^reviews/",  # 审核报告、裁决文件及临时文件
+    r"^batch/",
+    r"^reviews/",
 ]
 
 S0_PATTERNS = [
@@ -128,10 +130,11 @@ def validate_book(rest):
         "合法示例：\n"
         "  book/config.json\n"
         "  book/progress.json\n"
-        "  book/世界状态.md\n"
-        "  book/00-剧情草案.md … 06-编辑评审.md\n"
+        "  book/00-剧情草案.md … 08-世界状态.md\n"
         "  book/chapter-outlines/chapter0001.md\n"
-        "  book/chapters/chapter0001.md"
+        "  book/chapters/chapter0001.md\n"
+        "  book/batch/handoff-ch001-ch033.md\n"
+        "  book/reviews/"
     )
 
 
