@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /path/to/novels/.claude/hooks/novel-path-validator.py"
+            "command": "bash -c 'D=$PWD; while [ ! -d \"$D/.claude/hooks\" ] && [ \"$D\" != / ]; do D=$(dirname \"$D\"); done; exec python3 \"$D/.claude/hooks/novel-path-validator.py\"'"
           }
         ]
       },
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /path/to/novels/.claude/hooks/agent-guard.py"
+            "command": "bash -c 'D=$PWD; while [ ! -d \"$D/.claude/hooks\" ] && [ \"$D\" != / ]; do D=$(dirname \"$D\"); done; exec python3 \"$D/.claude/hooks/chapter-outline-reminder.py\"'"
           }
         ]
       },
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /path/to/novels/.claude/hooks/chapter-outline-reminder.py"
+            "command": "bash -c 'D=$PWD; while [ ! -d \"$D/.claude/hooks\" ] && [ \"$D\" != / ]; do D=$(dirname \"$D\"); done; exec python3 \"$D/.claude/hooks/agent-guard.py\"'"
           }
         ]
       }
