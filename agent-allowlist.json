@@ -2,7 +2,7 @@
   "_comment": "mq-novel 授权的 Agent description 正则。不匹配则被 agent-guard.py 拦截。",
   "allowed_patterns": [
     "^outline:\\d{2}:.+$",
-    "^chapter:act\\d+:.+$",
+    "^chapter:\\d+:.+$",
     "^storyboard:.+$"
   ]
 }
