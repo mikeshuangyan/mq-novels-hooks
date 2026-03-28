@@ -30,6 +30,16 @@
             "command": "bash -c 'D=$PWD; while [ ! -d \"$D/.claude/hooks\" ] && [ \"$D\" != / ]; do D=$(dirname \"$D\"); done; exec python3 \"$D/.claude/hooks/chapter-outline-reminder.py\"'"
           }
         ]
+      },
+      {
+        "// 说明": "Sleep 拦截 — 阻止 Agent 用 sleep 轮询后台任务，强制等待系统通知",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'D=$PWD; while [ ! -d \"$D/.claude/hooks\" ] && [ \"$D\" != / ]; do D=$(dirname \"$D\"); done; exec python3 \"$D/.claude/hooks/sleep-guard.py\"'"
+          }
+        ]
       }
     ]
   }
