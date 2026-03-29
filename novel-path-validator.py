@@ -212,6 +212,9 @@ def validate_path(file_path):
     rest = "/".join(parts[4:])
 
     if not rest:
+        # known_dir 实际上是项目根目录下的文件名（如 .gitignore）
+        if known_dir == ".gitignore":
+            return True, None
         return False, f"路径缺少具体文件名: {file_path}"
 
     # 先用 config.json 锚点校验项目名
